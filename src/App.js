@@ -1,28 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import { Route, BrowserRouter as Router } from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h2>
-          Electronic Mint
-        </h2>
-        <p>
-          Coming soon...
-        </p>
-        <a
-          className="App-link"
-          href="https://www.morion4000.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          morion4000
-        </a>
-      </header>
-    </div>
-  );
+import Home from './pages/Home.js';
+import About from './pages/About.js';
+
+import './css/App.css';
+
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <Router>
+        <div>
+          <Route exact path="/" component={Home} />
+          <Route path="/about" component={About} />
+        </div>
+      </Router>
+    );
+  }
 }
 
 export default App;
