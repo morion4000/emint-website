@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import Web3 from './Web3.js';
-
 
 class FooterSmall extends Component {
   render() {
@@ -14,7 +12,7 @@ class FooterSmall extends Component {
              <ul className="list-inline">
                <li className="list-inline-item">
                  <a href="#">
-                   <img alt="Image" src="assets/img/logo_black_square.png" height="30" />
+                   <img src="assets/img/logo_black_square.png" height="30" />
                  </a>
                </li>
              </ul>

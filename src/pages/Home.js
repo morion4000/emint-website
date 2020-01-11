@@ -6,10 +6,6 @@ import FooterSmall from '../containers/FooterSmall.js';
 
 
 class Home extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <div>
