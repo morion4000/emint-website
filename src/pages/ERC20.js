@@ -180,12 +180,10 @@ class ERC20 extends Component {
                         </div>
                     </div>
 
-                    {/*
                     <div class="text-center">
-                        <span class="text-small">Already have an account? <a href="#">Log in here</a>
+                        <span class="text-small">created by <a href="https://www.morion4000.com" target="_blank">morion4000</a>
                         </span>
                     </div>
-                    */}
                 </div>
             </section>
         </div>
