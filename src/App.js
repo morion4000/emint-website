@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
 
-import Home from './pages/Home.js';
-import About from './pages/About.js';
+import ERC20 from './pages/ERC20.js';
 
 import './css/App.css';
 
@@ -12,8 +11,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Route exact path="/" component={Home} />
-          <Route path="/about" component={About} />
+          <Route exact path="/" component={ERC20} />
         </div>
       </Router>
     );
