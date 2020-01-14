@@ -45,9 +45,7 @@ class ERC20 extends Component {
 
     const contract = new ERC20Factory(this.state.web3);
 
-    contract.create(this.state.name, this.state.symbol, this.state.decimals).then(function(newContractInstance){
-        console.log(newContractInstance);
-    });
+    contract.create(this.state.name, this.state.symbol, this.state.decimals);
   }
 
   render() {
