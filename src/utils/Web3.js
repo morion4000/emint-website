@@ -35,7 +35,7 @@ function _getNetworkName(id) {
 let getWeb3 = new Promise(function(resolve, reject) {
   // Wait for loading completion to avoid race conditions with web3 injection timing.
   window.addEventListener('load', function() {
-    let web3, provider, legacy = false;
+    let web3, provider, stable = false;
 
     if (typeof window.ethereum !== 'undefined' || typeof window.web3 !== 'undefined') {
       // Checking if Web3 has been injected by the browser (Mist/MetaMask)
@@ -44,12 +44,11 @@ let getWeb3 = new Promise(function(resolve, reject) {
         provider = window.ethereum;
 
         window.ethereum.enable();
+        stable = true;
 
         console.log('Injected web3 detected.');
       } else if (window.web3) {
         provider = window.web3.currentProvider;
-
-        legacy = true;
         
         console.log('Injected web3 detected (legacy).');
       }
@@ -66,7 +65,7 @@ let getWeb3 = new Promise(function(resolve, reject) {
     resolve({
       web3: web3,
       provider: provider,
-      legacy: legacy
+      stable: stable
     });
   });
 });

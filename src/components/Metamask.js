@@ -44,7 +44,7 @@ class Metamask extends Component {
     const _this = this;
 
     getWeb3.then(function(res) {
-      if (res.web3) {  
+      if (res.web3) {
         _this.setState({
           installed: res.web3.currentProvider.isMetaMask,
           network: res.web3.currentProvider.networkVersion,
@@ -52,7 +52,7 @@ class Metamask extends Component {
         });
         
         // accountsChanged event only works with web3 > 1.0.0
-        if (!res.legacy) {
+        if (res.stable) {
           res.provider.on('accountsChanged', function(accounts) {
             if (accounts.length) {
               _this.setState({
