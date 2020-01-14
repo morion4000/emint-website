@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
-import getWeb3 from './../utils/getWeb3';
+//import { ethers } from 'ethers';
+
+import Announcement from './Announcement';
+import getWeb3, {getNetworkName} from '../utils/web3';
+
 
 function MetamaskMessage(props) {
   const installed = props.installed;
+  const network = getNetworkName(props.network);
+  const account = props.account;
 
   if (installed) {
     return (
-      <div>
-        Metamask is installed and ready.
-      </div>
+      <Announcement icon="icon-done" text={`Metamask is using ${account} on ${network}`}></Announcement>
     );
   } else {
-    return (
-      <div className="warning">
-        Metamask is not installed. Install it <a href="https://metamask.io/" target="_blank">here</a>.
-      </div>
+    return (  
+      <Announcement text="Metamask is not installed." linkAddress="https://metamask.io" linkText="Install Metamask"></Announcement>
     );
   }
 }
@@ -24,28 +26,30 @@ class Metamask extends Component {
     super(props);
 
     this.state = {
-      installed: false
+      installed: false,
+      network: null,
+      accounts: []
     };
   }
 
-  componentWillMount() {
+  async componentWillMount() {
     getWeb3.then(this.ready.bind(this));
   }
 
-  ready() {
-    this.setState({
-      installed: window.web3.currentProvider.isMetaMask
-    });
+  ready(web3) {
+    if (web3) {
+      this.setState({
+        installed: web3.currentProvider.isMetaMask,
+        network: web3.currentProvider.networkVersion,
+        account: web3.currentProvider.selectedAddress
+      });
+    }
   }
 
   render() {
     return (
       <div className="Metamask">
-        <center>
-          <img src="assets/img/metamask.png" width="150" />
-        </center>
-        <br />
-        <MetamaskMessage installed={this.state.installed} />
+        <MetamaskMessage installed={this.state.installed} network={this.state.network} account={this.state.account} />
       </div>
     );
   }
