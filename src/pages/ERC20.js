@@ -1,22 +1,37 @@
 import React, { Component } from 'react';
 
+import ERC20Factory from '../components/ERC20Factory';
+
 
 class ERC20 extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+        name: '',
+        symbol: '',
+        decimals: ''
+    };
+
+    this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
 
-    var batch = window.web3.createBatch();
+    this.setState({
+      [name]: value
+    });
+  }
 
-    batch.add(this.state.identityFactoryInstance.create(this.state.username));
-    batch.add(this.state.documentFactoryInstance.create('public', this.state.public));
+  handleSubmit(e) {
+    e.preventDefault();
 
-    batch.execute();
+    const contract = new ERC20Factory();
+    contract.create();
   }
 
   render() {
@@ -25,6 +40,7 @@ class ERC20 extends Component {
         <div className="main-container">
             <section className="space-sm">
                 <div className="container">
+                    {/*
                     <div className="row mb-5">
                         <div className="col text-center">
                             <a href="/">
@@ -32,6 +48,7 @@ class ERC20 extends Component {
                             </a>
                         </div>
                     </div>
+                    */}
                     <nav aria-label="breadcrumb" role="navigation">
                         <div className="container">
                             <div className="row justify-content-center">
@@ -53,26 +70,46 @@ class ERC20 extends Component {
                             </div>
                             <div className="row justify-content-center">
                                 <div className="col-12 col-lg-9">
-                                    <form>
+                                    <form onSubmit={this.handleSubmit}>
                                         <div className="form-row form-group">
                                             <div className="col">
-                                                <input className="form-control form-control-lg" type="text" id="company" placeholder="Name" />
+                                                <input 
+                                                    className="form-control form-control-lg"
+                                                    type="text"
+                                                    placeholder="Name"
+                                                    name="name"
+                                                    value={this.state.name}
+                                                    onChange={this.handleInputChange} />
                                                 <small>Token name. i.e. Ethereum</small>
                                             </div>
                                         </div>
                                         <div className="form-row form-group">
                                             <div className="col">
-                                                <input className="form-control form-control-lg" type="text" id="firstname" placeholder="Symbol" />
+                                                <input
+                                                    className="form-control form-control-lg"
+                                                    type="text"
+                                                    placeholder="Symbol"
+                                                    name="symbol"
+                                                    value={this.state.symbol}
+                                                    onChange={this.handleInputChange} />
                                                 <small>Token symbol. i.e. ETH</small>
                                             </div>
                                             <div className="col">
-                                                <input className="form-control form-control-lg" type="text" id="lastname" placeholder="Decimals" />
-                                                <small>Token decimals. Most common is 18.</small>
+                                                <input
+                                                    className="form-control form-control-lg"
+                                                    type="number" 
+                                                    placeholder="Decimals"
+                                                    name="decimals"
+                                                    min="1"
+                                                    max="18"
+                                                    value={this.state.decimals}
+                                                    onChange={this.handleInputChange} />
+                                                <small>Token decimals. Common is 18.</small>
                                             </div>
                                         </div>
                                         <div className="form-row form-group">
                                             <div className="col">
-                                                <button className="btn btn-block btn-success btn-lg" type="submit" disabled>Create Token</button>
+                                                <button className="btn btn-block btn-success btn-lg" type="submit">Create Token</button>
                                             </div>
                                         </div>
                                         <div className="text-center">

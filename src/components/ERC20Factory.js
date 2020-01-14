@@ -1,22 +1,16 @@
-import contract from 'truffle-contract';
+import { ethers } from 'ethers';
 
-//import DocumentFactoryContract from '../../build/contracts/DocumentFactory.json';
+import ERC20Contract from '../artifacts/erc20.json';
 
 
 class ERC20Factory {
   constructor(web3) {
-    this.web3 = web3;
-    //this.documentFactory = contract(DocumentFactoryContract);
-    //this.documentFactory.setProvider(this.web3.currentProvider);
+    //this.wallet = web3.
+    //let factory = new ethers.ContractFactory(abi, bytecode, wallet);
   }
 
-  async create(key, value) {
-    const account = this.web3.eth.accounts[0];
-    const instance = await this.documentFactory.deployed();
-
-    return instance.createDocument(key, value, {
-      from: account
-    });
+  async create(name, symbol, decimals) {
+    
   }
 }
 
