@@ -8,16 +8,25 @@ function MetamaskMessage(props) {
   const installed = props.installed;
   const network = getNetworkName(props.network);
   const account = props.account;
+  let fragment;
 
   if (installed) {
-    return (
-      <Announcement icon="icon-done" text={`Metamask is using ${account} on ${network}`}></Announcement>
-    );
+    if (account && network) {
+      fragment = (
+        <Announcement icon="icon-done" text={`Metamask is using ${account} on ${network}`}></Announcement>
+      );
+    } else {
+      fragment = (
+        <Announcement icon="icon-done" text="Please unlock Metamask and authorise Emint.io"></Announcement>
+      );
+    }
   } else {
-    return (  
+    fragment = (
       <Announcement text="Metamask is not installed." linkAddress="https://metamask.io" linkText="Install Metamask"></Announcement>
     );
   }
+
+  return fragment;
 }
 
 class Metamask extends Component {
@@ -27,22 +36,33 @@ class Metamask extends Component {
     this.state = {
       installed: false,
       network: null,
-      accounts: []
+      account: null
     };
   }
 
   componentWillMount() {
-    getWeb3.then(this.ready.bind(this));
-  }
+    const _this = this;
 
-  ready(web3) {
-    if (web3) {
-      this.setState({
-        installed: web3.currentProvider.isMetaMask,
-        network: web3.currentProvider.networkVersion,
-        account: web3.currentProvider.selectedAddress
-      });
-    }
+    getWeb3.then(function(res) {
+      if (res.web3) {  
+        _this.setState({
+          installed: res.web3.currentProvider.isMetaMask,
+          network: res.web3.currentProvider.networkVersion,
+          account: res.web3.currentProvider.selectedAddress
+        });
+        
+        // accountsChanged event only works with web3 > 1.0.0
+        if (!res.legacy) {
+          res.provider.on('accountsChanged', function(accounts) {
+            if (accounts.length) {
+              _this.setState({
+                account: accounts[0]
+              });
+            }
+          });
+        }
+      }
+    });
   }
 
   render() {

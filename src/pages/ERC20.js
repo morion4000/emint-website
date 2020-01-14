@@ -8,9 +8,9 @@ class ERC20 extends Component {
     super(props);
 
     this.state = {
-        name: 'Hostero',
-        symbol: 'HOST',
-        decimals: 18,
+        name: '',
+        symbol: '',
+        decimals: '',
         web3: null
     };
 
@@ -19,15 +19,15 @@ class ERC20 extends Component {
   }
 
   componentWillMount() {
-    getWeb3.then(this.ready.bind(this));
-  }
+    const _this = this;
 
-  ready(web3) {
-    if (web3) {
-      this.setState({
-        web3: web3
-      });
-    }
+    getWeb3.then(function(res) {
+        if (res.web3) {
+            _this.setState({
+                web3: res.web3
+            });
+        }
+    });
   }
 
   handleInputChange(event) {
@@ -49,6 +49,9 @@ class ERC20 extends Component {
   }
 
   render() {
+    const { name, symbol, decimals } = this.state;
+    const enabled = name.length > 0 && symbol.length > 0 && decimals.length > 0;
+
     return (
       <div>
         <div className="main-container">
@@ -123,13 +126,18 @@ class ERC20 extends Component {
                                         </div>
                                         <div className="form-row form-group">
                                             <div className="col">
-                                                <button className="btn btn-block btn-success btn-lg" type="submit">Create Token</button>
+                                                <button
+                                                    className="btn btn-block btn-success btn-lg"
+                                                    type="submit"
+                                                    disabled={!enabled}>Create Token</button>
                                             </div>
                                         </div>
+                                        {/*
                                         <div className="text-center">
                                             <span className="text-small text-muted">By clicking 'Create Token' you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>
                                             </span>
                                         </div>
+                                        */}
                                     </form>
                                 </div>
                             </div>
@@ -174,7 +182,7 @@ class ERC20 extends Component {
                     </div>
 
                     <div className="text-center">
-                        <span className="text-small">created by <a href="https://www.morion4000.com" target="_blank">morion4000</a>
+                        <span className="text-small">Made by <a href="https://www.morion4000.com" target="_blank" rel="noopener noreferrer">morion4000</a>
                         </span>
                     </div>
                 </div>
