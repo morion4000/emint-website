@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-//import { ethers } from 'ethers';
 
 import Announcement from './Announcement';
 import getWeb3, {getNetworkName} from '../utils/web3';
@@ -32,7 +31,7 @@ class Metamask extends Component {
     };
   }
 
-  async componentWillMount() {
+  componentWillMount() {
     getWeb3.then(this.ready.bind(this));
   }
 

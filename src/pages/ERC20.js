@@ -1,20 +1,33 @@
 import React, { Component } from 'react';
 
 import ERC20Factory from '../components/ERC20Factory';
-
+import getWeb3 from '../utils/web3';
 
 class ERC20 extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-        name: '',
-        symbol: '',
-        decimals: ''
+        name: 'Hostero',
+        symbol: 'HOST',
+        decimals: 18,
+        web3: null
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentWillMount() {
+    getWeb3.then(this.ready.bind(this));
+  }
+
+  ready(web3) {
+    if (web3) {
+      this.setState({
+        web3: web3
+      });
+    }
   }
 
   handleInputChange(event) {
@@ -30,8 +43,11 @@ class ERC20 extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    const contract = new ERC20Factory();
-    contract.create();
+    const contract = new ERC20Factory(this.state.web3);
+
+    contract.create(this.state.name, this.state.symbol, this.state.decimals).then(function(newContractInstance){
+        console.log(newContractInstance);
+    });
   }
 
   render() {
