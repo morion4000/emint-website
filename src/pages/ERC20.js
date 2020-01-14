@@ -2,66 +2,19 @@ import React, { Component } from 'react';
 import contract from 'truffle-contract';
 
 import getWeb3 from './../utils/getWeb3';
-import AnnouncementFragment from '../containers/AnnouncementFragment.js';
-import Web3, { getNetworkName, currentNetwork } from '../containers/Web3.js';
-import Metamask from '../containers/Metamask.js';
-
-
-function ProviderWarningMessage(props) {
-  const network = getNetworkName(props.network);
-  const metamask = props.metamask;
-
-  if (metamask) {
-    if (network !== currentNetwork) {
-      return (
-        <div>
-          <AnnouncementFragment icon="icon-warning" text={"Please point Metamask to " + currentNetwork +" testnet."} linkText="Read More ›" linkAddress="/testnet" />
-        </div>
-      );
-    } else {
-      return (
-        <div></div>
-      );
-    }
-  } else {
-    return (
-      <AnnouncementFragment icon="icon-warning" text="Please install Metamask." linkText="Read More ›" linkAddress="/" />
-    );
-  }
-}
+import Web3, { getNetworkName, currentNetwork } from '../utils/Web3.js';
+import Metamask from '../components/Metamask.js';
 
 
 class ERC20 extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      username: null,
-      public: false,
-      identityFactoryInstance: null,
-      documentFactoryInstance: null,
-      accounts: [],
-      metamask: false,
-      network: null
-    };
-
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentWillMount() {
-    getWeb3.then(this.ready.bind(this));
-  }
-
-  ready() {
-    /*
-    this.setState({
-      metamask: window.web3.currentProvider.isMetaMask,
-      network: window.web3.version.network,
-      accounts: window.web3.eth.accounts,
-      identityFactoryInstance: new IdentityFactory(window.web3),
-      documentFactoryInstance: new DocumentFactory(window.web3)
-    });
-    */
+    getWeb3.then();
   }
 
   handleSubmit(event) {
@@ -78,8 +31,6 @@ class ERC20 extends Component {
   render() {
     return (
       <div>
-        <ProviderWarningMessage network={this.state.network} metamask={this.state.metamask} />
-
         <div className="main-container">
             <section class="space-sm">
                 <div class="container">

@@ -3,7 +3,7 @@ import contract from 'truffle-contract';
 //import DocumentFactoryContract from '../../build/contracts/DocumentFactory.json';
 
 
-class DocumentFactory {
+class ERC20Factory {
   constructor(web3) {
     this.web3 = web3;
     //this.documentFactory = contract(DocumentFactoryContract);
@@ -20,4 +20,4 @@ class DocumentFactory {
   }
 }
 
-export default DocumentFactory;
+export default ERC20Factory;
