@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import Metamask from '../components/Metamask';
 import ERC20Factory from '../components/ERC20Factory';
 import getWeb3 from '../utils/web3';
 
@@ -54,6 +55,8 @@ class ERC20 extends Component {
 
     return (
       <div>
+        <Metamask></Metamask>
+
         <div className="main-container">
             <section className="space-sm">
                 <div className="container">
