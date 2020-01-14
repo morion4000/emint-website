@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Metamask from '../components/Metamask';
 import ERC20Factory from '../components/ERC20Factory';
-import getWeb3 from '../utils/web3';
+import getWeb3 from '../utils/getWeb3';
 
 class ERC20 extends Component {
   constructor(props) {

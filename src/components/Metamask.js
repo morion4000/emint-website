@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import Announcement from './Announcement';
-import getWeb3, {getNetworkName} from '../utils/web3';
+import getWeb3, {getNetworkName} from '../utils/getWeb3';
 
 
 function MetamaskMessage(props) {
