@@ -12,6 +12,7 @@ class ERC20 extends Component {
         name: '',
         symbol: '',
         decimals: '',
+        enabled: true,
         web3: null
     };
 
@@ -47,11 +48,15 @@ class ERC20 extends Component {
     const contract = new ERC20Factory(this.state.web3);
 
     contract.create(this.state.name, this.state.symbol, this.state.decimals);
+
+    this.setState({
+        enabled: false
+    });
   }
 
   render() {
     const { name, symbol, decimals } = this.state;
-    const enabled = name.length > 0 && symbol.length > 0 && decimals.length > 0;
+    const valid = name.length > 0 && symbol.length > 0 && decimals.length > 0;
 
     return (
       <div>
@@ -132,7 +137,7 @@ class ERC20 extends Component {
                                                 <button
                                                     className="btn btn-block btn-success btn-lg"
                                                     type="submit"
-                                                    disabled={!enabled}>Create Token</button>
+                                                    disabled={!valid || !this.state.enabled}>Create Token</button>
                                             </div>
                                         </div>
                                         {/*
