@@ -13,7 +13,7 @@ class ERC20Factory {
   }
 
   async create(name, symbol, decimals, initialSupply) {
-    // TODO: initialSupply needs to be converted
+    // TODO: initialSupply needs to be converted based on decimals
     return this.contract.deploy({
       data: ERC20Artifact.bytecode,
       arguments: [name, symbol, decimals, initialSupply]
