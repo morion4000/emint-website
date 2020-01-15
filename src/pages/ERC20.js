@@ -12,6 +12,7 @@ class ERC20 extends Component {
         name: '',
         symbol: '',
         decimals: '',
+        initialSupply: '',
         enabled: true,
         web3: null
     };
@@ -47,7 +48,7 @@ class ERC20 extends Component {
 
     const contract = new ERC20Factory(this.state.web3);
 
-    contract.create(this.state.name, this.state.symbol, this.state.decimals);
+    contract.create(this.state.name, this.state.symbol, this.state.decimals, this.state.initialSupply);
 
     this.setState({
         enabled: false
@@ -55,8 +56,8 @@ class ERC20 extends Component {
   }
 
   render() {
-    const { name, symbol, decimals } = this.state;
-    const valid = name.length > 0 && symbol.length > 0 && decimals.length > 0;
+    const { name, symbol, decimals, initialSupply } = this.state;
+    const valid = name.length > 0 && symbol.length > 0 && decimals.length > 0 && initialSupply.length > 0;
 
     return (
       <div>
@@ -105,10 +106,8 @@ class ERC20 extends Component {
                                                     name="name"
                                                     value={this.state.name}
                                                     onChange={this.handleInputChange} />
-                                                <small>Token name. i.e. Ethereum</small>
+                                                <small>i.e. Ethereum</small>
                                             </div>
-                                        </div>
-                                        <div className="form-row form-group">
                                             <div className="col">
                                                 <input
                                                     className="form-control form-control-lg"
@@ -117,8 +116,10 @@ class ERC20 extends Component {
                                                     name="symbol"
                                                     value={this.state.symbol}
                                                     onChange={this.handleInputChange} />
-                                                <small>Token symbol. i.e. ETH</small>
+                                                <small>i.e. ETH</small>
                                             </div>
+                                        </div>
+                                        <div className="form-row form-group">
                                             <div className="col">
                                                 <input
                                                     className="form-control form-control-lg"
@@ -129,7 +130,19 @@ class ERC20 extends Component {
                                                     max="18"
                                                     value={this.state.decimals}
                                                     onChange={this.handleInputChange} />
-                                                <small>Token decimals. Common is 18.</small>
+                                                <small>Common is 18.</small>
+                                            </div>
+                                            <div className="col">
+                                                <input
+                                                    className="form-control form-control-lg"
+                                                    type="number" 
+                                                    placeholder="Initial supply"
+                                                    name="initialSupply"
+                                                    min="0"
+                                                    max="1000000000000"
+                                                    value={this.state.initialSupply}
+                                                    onChange={this.handleInputChange} />
+                                                <small>Initial supply.</small>
                                             </div>
                                         </div>
                                         <div className="form-row form-group">

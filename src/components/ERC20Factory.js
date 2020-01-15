@@ -3,14 +3,20 @@ import ERC20Artifact from '../artifacts/erc20.json';
 
 class ERC20Factory {
   constructor(web3) {
-    this.contract = new web3.eth.Contract(ERC20Artifact.abi);
     this.wallet = web3.currentProvider.selectedAddress;
+    this.contract = new web3.eth.Contract(ERC20Artifact.abi);
+    this.contract.contractName = ERC20Artifact.contractName;
+    this.contract.compiler = ERC20Artifact.compiler;
+    this.contract.bytecode = ERC20Artifact.bytecode;
+    this.contract.devdoc = ERC20Artifact.devdoc;
+    this.contract.stringifiedAbi = JSON.stringify(ERC20Artifact.abi);
   }
 
-  async create(name, symbol, decimals) {
+  async create(name, symbol, decimals, initialSupply) {
+    // TODO: initialSupply needs to be converted
     return this.contract.deploy({
       data: ERC20Artifact.bytecode,
-      arguments: [name, symbol, decimals]
+      arguments: [name, symbol, decimals, initialSupply]
     })
     .send({
       from: this.wallet,
